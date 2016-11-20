@@ -15,10 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     translatecore.cpp \
-    subtitle.cpp
+    subtitle.cpp \
+    baidutranslate.cpp
 
 HEADERS  += mainwindow.h \
     translatecore.h \
-    subtitle.h
+    subtitle.h \
+    baidutranslate.h
 
 FORMS    += mainwindow.ui

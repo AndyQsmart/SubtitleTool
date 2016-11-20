@@ -28,6 +28,7 @@ class MainWindow : public QMainWindow
         Ui::MainWindow *ui;
         Subtitle *subtitle;
         Subtitle *newSubtitle;
+        TranslateCore *translateCore;
 };
 
 #endif // MAINWINDOW_H

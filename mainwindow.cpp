@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "translatecore.h"
+#include "baidutranslate.h"
 #include "subtitle.h"
 #include <QFileDialog>
 #include <QScrollBar>
@@ -27,12 +28,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::translate()
 {
+    translateCore = new BaiduTranslate();
     for (int i = 0; i < subtitle->line.size(); ++i)
     {
-        TranslateCore *translateCore = new TranslateCore();
         connect(translateCore, SIGNAL(finished(int, QString)), this, SLOT(getTranslation(int, QString)));
-        translateCore->translateText(i, subtitle->line[i]);
+        translateCore->translateText(i, subtitle->line[i],
+                                     ui->fromLanguageBox->currentText(),
+                                     ui->toLanguageBox->currentText());
     }
+    //delete translateCore;
 }
 
 void MainWindow::getTranslation(int id, QString ans)
