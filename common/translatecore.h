@@ -14,8 +14,10 @@ public:
     TranslateCore(QObject *parent = 0);
     virtual void translateText(int id, QString fromText, QString from, QString to) = 0;
 
+/*
 signals:
     void finished(int id, QString ans);
+*/
 
 protected slots:
     virtual void finished(QNetworkReply *reply) = 0;

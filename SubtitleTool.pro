@@ -14,13 +14,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    translatecore.cpp \
     subtitle.cpp \
-    baidutranslate.cpp
+    baidutranslate.cpp \
+    common/translatecore.cpp
 
 HEADERS  += mainwindow.h \
-    translatecore.h \
     subtitle.h \
-    baidutranslate.h
+    baidutranslate.h \
+    common/translatecore.h
 
 FORMS    += mainwindow.ui
+
+CONFIG += c++11
