@@ -1,7 +1,7 @@
 #ifndef BAIDUTRANSLATE_H
 #define BAIDUTRANSLATE_H
 
-#include <translatecore.h>
+#include <common/translatecore.h>
 
 class BaiduTranslate : public TranslateCore
 {

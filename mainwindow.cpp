@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "translatecore.h"
+#include "common/translatecore.h"
 #include "baidutranslate.h"
 #include "subtitle.h"
 #include <QFileDialog>
