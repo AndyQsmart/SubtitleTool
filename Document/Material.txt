@@ -1,0 +1,11 @@
+1. accent，color类型，表示重点色，默认是Material.Pink
+
+2. primary，color类型，表示优选色，默认是 Material.Indigo
+
+3. backbround，color类型，表示背景色，默认由主题指定（light或者dark）
+
+4. elevation，int类型，表示海拔高度，值越大，阴影越深，该值与具体控件相关
+
+5. foreground，color类型，表示前景色，默认值由主题指定（light或者dark）
+
+6. theme，枚举类型，表示主题，默认是Material.Light，也可修改为Material.Dark

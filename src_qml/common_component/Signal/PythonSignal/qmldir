@@ -1,0 +1,2 @@
+// qmldir
+singleton PythonSignal 1.0 PythonSignal.qml

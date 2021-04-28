@@ -1,0 +1,5 @@
+Analysis中datas字段：
+add_files = [
+    ('src_qml', 'src_qml'),
+]
+第一个文件名，第二个运行时的目录路径

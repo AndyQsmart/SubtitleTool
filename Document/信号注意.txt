@@ -1,0 +1,3 @@
+在QML中定义信号xxxCallback
+则在外部使用Connections时，回调函数为onXxxCallback
+或者使用A.xxxCallback.connect(func)
