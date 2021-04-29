@@ -3,10 +3,7 @@ import QtQuick.Window 2.13
 import QtQuick.Controls.Material 2.0
 import QtQuick.Controls 2.15
 import Qt.labs.platform 1.1
-import "./common_js/Color.js" as Color
 import "./common_component/Route"
-import "./common_component/Icon"
-import "./common_component/Button/MenuItem"
 import "./common_component/Signal/PythonSignal"
 import "./instance_component/SQLTable/SettingData"
 import "./instance_component/SystemTray"

@@ -1,5 +1,5 @@
 import QtQuick 2.13
-import "../../../common_js/Color.js" as Color
+import "../../../common_qml"
 import "../Typography/FontSize.js" as FontSize
 
 TextInput {

@@ -3,8 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.11
 import "../DateSelector"
 import "../../Icon"
-import "../../../common_js/Color.js" as Color
-import "../../../common_js/Tools.js" as Tools
+import "../../../common_qml"
 import "../../Text/Typography/FontSize.js" as FontSize
 
 Rectangle {

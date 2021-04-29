@@ -2,21 +2,16 @@ import QtQuick 2.13
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
 import QtQuick.Layouts 1.11
-import "../../common_component/Button/QButton"
-import "../../common_component/Button/MenuItem"
-import "../../common_component/Divider"
+import "../../common_qml"
+import "../../common_component/MaterialUI"
 import "../../common_component/Icon"
-import "../../common_component/Text/Typography"
 import "../../common_component/Text/Toast"
 import "../../common_component/Route"
 import "../../instance_component/Navbar"
-import "../../instance_component/CreateRecordDialog"
-import "../../instance_component/DataProcessor/LiveRecordProcessor"
-import "../../common_js/Color.js" as Color
-import "../../common_js/Tools.js" as Tools
 
 Pane {
-    property var task_list: []
+    property var subtitle_list: []
+    property var translate_list: []
     property int current_menu_index: -1
 
     id: container
@@ -24,32 +19,24 @@ Pane {
     y: 0
     padding: 0
 
-    function requestList() {
-        console.log("(HomePage.qml)try request list")
-        LiveRecordProcessor.getLiveRecordList({
-            min_end_time_stamp: Tools.getTimeStamp(),
-            order_key: ['start_time_stamp', true],
-        }, null, null, function (result_id, ans) {
-            if (result_id === 0) {
-                //                console.log('(HomePage.qml)requestList: ans', JSON.stringify(ans))
-                let new_task_list = []
-                Object.assign(new_task_list, task_list, ans.task_list)
-                container.task_list = new_task_list
-            }
-        })
+    function startTranslate() {
+        for (let i = 0; i < 1; i++) {
+            let the_subtitle = subtitle_list[i].text
+            let result = BaiduTranslate.translateText(the_subtitle, 'auto', 'en')
+        }
     }
 
-    function resetList() {
-        task_list = []
-        requestList()
-    }
-
-    function tryEditItem(index) {
-        createDialog.show(task_list[index].id)
+    function onSelectSrt(url_list) {
+        let sub_text = FileUtil.readFile(url_list[0])
+        subtitle_list = SubtitleUtil.analyseSubtitleText(sub_text)
+        translate_list = []
+        for (let i = 0; i < subtitle_list.length; i++) {
+            translate_list.push("")
+        }
+        console.log(JSON.stringify(subtitle_list))
     }
 
     Component.onCompleted: {
-        requestList()
     }
 
     RowLayout {
@@ -74,17 +61,16 @@ Pane {
                     Layout.margins: 10
                     ColumnLayout.fillWidth: true
 
-                    QButton {
-                        variant: 'outlined'
-                        text: qsTr("新建")
-                        color: Color.text_secondary
-                        onClicked: {
-                            createDialog.show()
-                        }
-                        ToolTip.text: qsTr("新建直播任务")
+                    FileButton {
+                        accept: 'srt'
+                        variant: 'contained'
+                        color: 'primary'
+                        text: qsTr("打开")
+                        ToolTip.text: qsTr("打开字幕文件")
                         ToolTip.visible: hovered
                         ToolTip.timeout: 3000
                         ToolTip.delay: 0
+                        onChange: onSelectSrt(url_list)
                     }
                 }
 
@@ -92,146 +78,90 @@ Pane {
                     ColumnLayout.fillWidth: true
                 }
 
-                ListView {
-                    id: record_list
-                    clip: true
+                RowLayout {
                     ColumnLayout.fillWidth: true
                     ColumnLayout.fillHeight: true
-                    model: task_list.length
-                    orientation: ListView.Vertical
-                    delegate: MenuItem {
-                        width: record_list.width
-                        height: children[1].height
 
-                        MouseArea {
-                            anchors.fill: parent
-                            acceptedButtons: Qt.LeftButton | Qt.RightButton
-                            onClicked: {
-                                if (mouse.button === Qt.RightButton) {
-                                    current_menu_index = index
-                                    itemMenu.popup()
-                                }
-                                else if (mouse.button === Qt.LeftButton) {
-                                    Route.navigateTo('/live/liverecordpage', {
-                                        id: task_list[index].id,
-                                        title: task_list[index].title,
-                                    })
-                                }
-                            }
+                    ColumnLayout {
+                        ColumnLayout.fillWidth: true
+                        ColumnLayout.fillHeight: true
+                        spacing: 0
+
+                        ComboBox {
+//							model: [].concat(defaultResolution).concat(['自定义'])
+                            model: ['自动检测', '中文', '英语', '日语']
                         }
 
-                        RowLayout {
-                            anchors.fill: parent
-                            spacing: 0
-                            anchors.leftMargin: parent.leftPadding
-                            anchors.rightMargin: parent.rightPadding + 10
-                            height: {
-                                let height = 0
-                                for (let i = 0; i < children.length; i++) {
-                                    height = Math.max(height, children[i].height)
-                                }
-                                return height
-                            }
-
-                            Icon {
-                                size: 20
-                                name: 'video-camera'
-                                color: Color.primary
-                            }
-
-                            Item {
-                                RowLayout.fillWidth: true
-                                Layout.leftMargin: 10
-
+                        ListView {
+                            id: record_list
+                            clip: true
+                            ColumnLayout.fillWidth: true
+                            ColumnLayout.fillHeight: true
+                            model: subtitle_list.length
+                            orientation: ListView.Vertical
+                            delegate: MListItem {
+                                width: record_list.width
                                 height: children[0].height
 
-                                ColumnLayout {
-                                    Typography {
-                                        topPadding: 15
-                                        text: task_list[index].title
-                                    }
-
-                                    Typography {
-                                        text: {
-                                            let item = task_list[index]
-                                            const { start_time_stamp, end_time_stamp } = item
-                                            const begin_time = Tools.getDateByStamp(start_time_stamp)
-                                            const end_time = Tools.getDateByStamp(end_time_stamp)
-                                            const format_str = "%y.%MM.%dd %hh:%mm"
-                                            if (
-                                                begin_time.getFullYear() === end_time.getFullYear() &&
-                                                begin_time.getMonth() === end_time.getMonth() &&
-                                                begin_time.getDate() === end_time.getDate()
-                                            ) {
-                                                return Tools.getTimeByStamp(start_time_stamp, format_str) + ' - ' + Tools.getTimeByStamp(end_time_stamp, '%hh:%mm')
-                                            }
-                                            else {
-                                                return Tools.getTimeByStamp(start_time_stamp, format_str) + ' - ' + Tools.getTimeByStamp(end_time_stamp, format_str)
-                                            }
-                                        }
-                                        color: Color.text_secondary
-                                        variant: 'caption'
-                                        bottomPadding: 15
-                                    }
+                                Typography {
+                                    width: parent.width
+                                    text: subtitle_list[index].text
                                 }
+
                             }
 
-                            Icon {
-                                size: 20
-                                name: 'cog'
-                                color: Color.primary
-
-                                MouseArea {
-                                    anchors.fill: parent
-                                    cursorShape: Qt.PointingHandCursor
-                                    acceptedButtons: Qt.LeftButton | Qt.RightButton
-
-                                    onClicked: {
-                                        tryEditItem(index)
-                                    }
-
-                                }
+                            ScrollBar.vertical: ScrollBar {       //滚动条
                             }
                         }
                     }
 
-                    ScrollBar.vertical: ScrollBar {       //滚动条
-                        //                        anchors.right: lview.left
-                        //                        width: 50
-                        //                        active: true
-                        //                        background: Item {            //滚动条的背景样式
-                        //                            Rectangle {
-                        //                                anchors.centerIn: parent
-                        //                                height: parent.height
-                        //                                width: parent.width * 0.2
-                        //                                color: 'grey'
-                        //                                radius: width/2
-                        //                            }
-                        //                        }
+                    ColumnLayout {
+                        spacing: 0
 
-                        //                        contentItem: Rectangle {
-                        //                            radius: width/3        //bar的圆角
-                        //                            color: Color.gray
-                        //                        }
+                        ComboBox {
+                            model: ['百度翻译', '谷歌翻译']
+                        }
+
+                        MButton {
+                            text: qsTr("翻译")
+                            onClicked: startTranslate()
+                        }
+                    }
+
+                    ColumnLayout {
+                        ColumnLayout.fillWidth: true
+                        ColumnLayout.fillHeight: true
+                        spacing: 0
+
+                        ComboBox {
+                            model: ['自动检测', '中文', '英语', '日语']
+                        }
+
+
+                        ListView {
+                            id: translate_list_view
+                            clip: true
+                            ColumnLayout.fillWidth: true
+                            ColumnLayout.fillHeight: true
+                            model: subtitle_list.length
+                            orientation: ListView.Vertical
+                            delegate: MListItem {
+                                width: translate_list_view.width
+                                height: children[0].height
+
+                                Typography {
+                                    text: subtitle_list[index].text
+                                    wrapMode: Text.WrapAnywhere
+                                }
+
+                            }
+
+                            ScrollBar.vertical: ScrollBar {       //滚动条
+                            }
+                        }
                     }
                 }
             }
-        }
-    }
-
-    CreateRecordDialog {
-        id: createDialog
-        x: (parent.width - createDialog.width) / 2
-        y: (parent.height - createDialog.height) / 2
-        onFinish: {
-            if (id) {
-                toast.success(qsTr('任务修改成功'))
-            }
-            else {
-                toast.success(qsTr('任务创建成功'))
-            }
-
-            resetList()
         }
     }
 

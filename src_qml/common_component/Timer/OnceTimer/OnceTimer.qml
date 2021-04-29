@@ -1,5 +1,5 @@
 import QtQuick 2.13
-import "../../../common_js/Tools.js" as Tools
+import "../../../common_qml"
 
 Timer {
     id: timer

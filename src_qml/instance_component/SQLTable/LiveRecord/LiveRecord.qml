@@ -1,7 +1,7 @@
 import QtQuick 2.0
+import "../../../common_qml"
 import "../TableBase"
 import "../../../common_component/SQL/SQLHelper"
-import "../../../common_js/Tools.js" as Tools
 
 TableBase {
     table_name: 'LiveRecord'

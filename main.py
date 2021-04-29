@@ -7,7 +7,9 @@ from PySide2.QtGui import QGuiApplication, QFont
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtQuickControls2 import QQuickStyle
 
+from src.utils.file_util import FileUtil
 from src.utils.qml_signal import QMLSignal
+from src.utils.translate.baidu_translate import BaiduTranslate
 
 if __name__ == "__main__":
     # 高分辨率适配
@@ -24,6 +26,12 @@ if __name__ == "__main__":
 
     engine = QQmlApplicationEngine()
 
+    # 文件工具
+    file_util = FileUtil()
+    engine.rootContext().setContextProperty('FileUtil', file_util)
+    # 翻译接口
+    baidu_translate = BaiduTranslate()
+    engine.rootContext().setContextProperty('BaiduTranslate', baidu_translate)
     # 连接信号
     engine.rootContext().setContextProperty('QMLSignal', QMLSignal.instance())
 

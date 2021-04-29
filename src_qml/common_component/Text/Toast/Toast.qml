@@ -1,14 +1,14 @@
 import QtQuick 2.10
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
-import "../Typography/FontSize.js" as FontSize
-import "../../../common_js/Color.js" as Color
+import "../../../common_qml"
+import "../../MaterialUI/styles"
 
 ToolTip {
     padding: 10
     visible: false
     font.bold: true
-    font.pointSize: FontSize.body1
+    font.pointSize: TypographyStyle.fontSizeList.body1
     x: (parent.width-width)/2
     y: (parent.height-height)/2
     opacity: 0.8

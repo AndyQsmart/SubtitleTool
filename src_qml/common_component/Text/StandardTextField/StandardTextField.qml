@@ -2,7 +2,7 @@ import QtQuick 2.13
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
 import "../Typography/FontSize.js" as FontSize
-import "../../../common_js/Color.js" as Color
+import "../../../common_qml"
 
 TextField {
     id: textField

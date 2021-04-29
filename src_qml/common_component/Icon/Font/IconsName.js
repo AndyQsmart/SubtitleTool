@@ -10,4 +10,5 @@ var name = {
     camera: '\uf030',
     'volume-up': '\uf028',
     'volume-off': '\uf026',
+    'list-ul': '\uf0ca',
 }

@@ -3,10 +3,9 @@ import QtQuick.Controls.Material 2.0
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.11
 import QtQuick.Window 2.14
+import "../../common_qml"
+import "../../common_component/MaterialUI"
 import "../../common_component/Icon"
-import "../../common_component/Text/Typography"
-import "../../common_js/StringUtil.js" as Strings
-import "../../common_js/Color.js" as Color
 
 Popup {
     id: aboutPopup
@@ -67,8 +66,8 @@ Popup {
             topPadding: 10
             ColumnLayout.fillWidth: true
             horizontalAlignment: Text.AlignRight
-            text: qsTr('版本号：ver'+Strings.VERSION)
-            color: Color.text_secondary
+            text: qsTr('版本号：ver'+Strings.version)
+            textColor: 'textSecondary'
             variant: 'caption'
         }
 
@@ -76,8 +75,8 @@ Popup {
             topPadding: 10
             ColumnLayout.fillWidth: true
             horizontalAlignment: Text.AlignRight
-            text: qsTr('Copyright © 2020')
-            color: Color.text_secondary
+            text: qsTr('Copyright © 2021')
+            textColor: 'textSecondary'
             variant: 'caption'
         }
     }

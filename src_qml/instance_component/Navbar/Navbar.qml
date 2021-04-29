@@ -2,11 +2,10 @@ import QtQuick 2.13
 import QtQuick.Controls.Material 2.0
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.11
-import "../../common_js/Color.js" as Color
+import "../../common_qml"
+import "../../common_component/MaterialUI"
 import "../../common_component/Icon"
-import "../../common_component/Button/MenuItem"
 import "../../common_component/Route"
-import "../../common_component/Text/Typography"
 import "../../instance_component/AboutDialog"
 
 Pane {
@@ -25,7 +24,7 @@ Pane {
             anchors.bottomMargin: 10
             anchors.topMargin: 10
 
-            MenuItem {
+            MListItem {
                 id: button_task_list
                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                 ColumnLayout.fillWidth: true
@@ -37,7 +36,7 @@ Pane {
                     anchors.rightMargin: parent.rightPadding
 
                     Icon {
-                        name: "tasks"
+                        name: "list-ul"
                         size: 14
                         color: Color.white
                     }
@@ -45,7 +44,7 @@ Pane {
                     Typography {
                         RowLayout.fillWidth: true
                         leftPadding: 10
-                        text: qsTr("任务列表")
+                        text: qsTr("字幕翻译")
                         color: Color.white
     //                    font.weight: Font.Bold
                     }
@@ -57,42 +56,42 @@ Pane {
             }
 
 
-            MenuItem {
-                id: button_history_list
-                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                ColumnLayout.fillWidth: true
-                color: Color.white
+//            MListItem {
+//                id: button_history_list
+//                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+//                ColumnLayout.fillWidth: true
+//                color: Color.white
 
-                RowLayout {
-                    anchors.fill: parent
-                    anchors.leftMargin: parent.rightPadding
-                    anchors.rightMargin: parent.rightPadding
+//                RowLayout {
+//                    anchors.fill: parent
+//                    anchors.leftMargin: parent.rightPadding
+//                    anchors.rightMargin: parent.rightPadding
 
-                    Icon {
-                        name: "history"
-                        size: 14
-                        color: Color.white
-                    }
+//                    Icon {
+//                        name: "history"
+//                        size: 14
+//                        color: Color.white
+//                    }
 
-                    Typography {
-                        RowLayout.fillWidth: true
-                        leftPadding: 10
-                        text: qsTr("历史任务")
-                        color: Color.white
-    //                    font.weight: Font.Bold
-                    }
-                }
+//                    Typography {
+//                        RowLayout.fillWidth: true
+//                        leftPadding: 10
+//                        text: qsTr("历史任务")
+//                        color: Color.white
+//    //                    font.weight: Font.Bold
+//                    }
+//                }
 
-                onClicked: {
-                    Route.redirectTo('/live/historyrecordpage')
-                }
-            }
+//                onClicked: {
+//                    Route.redirectTo('/live/historyrecordpage')
+//                }
+//            }
 
             Item {
                 ColumnLayout.fillHeight: true
             }
 
-            MenuItem {
+            MListItem {
                 id: button_about
                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                 ColumnLayout.fillWidth: true

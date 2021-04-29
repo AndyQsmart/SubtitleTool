@@ -2,8 +2,7 @@ import QtQuick 2.13
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
 import QtQuick.Layouts 1.11
-import "../../../common_js/Color.js" as Color
-import "../../../common_js/Tools.js" as Tools
+import "../../../common_qml"
 import "../../Text/Typography/FontSize.js" as FontSize
 import "../DatePicker"
 import "../../Text/OutlinedTextField"

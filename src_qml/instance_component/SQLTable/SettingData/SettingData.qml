@@ -2,7 +2,6 @@ pragma Singleton
 
 import QtQuick 2.0
 import "../TableBase"
-import "../../../common_js/Tools.js" as Tools
 
 TableBase {
     table_name: 'SettingData'
