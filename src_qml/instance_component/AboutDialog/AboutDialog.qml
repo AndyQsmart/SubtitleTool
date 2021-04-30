@@ -5,7 +5,6 @@ import QtQuick.Layouts 1.11
 import QtQuick.Window 2.14
 import "../../common_qml"
 import "../../common_component/MaterialUI"
-import "../../common_component/Icon"
 
 Popup {
     id: aboutPopup

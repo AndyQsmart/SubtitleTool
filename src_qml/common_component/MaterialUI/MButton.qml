@@ -12,7 +12,7 @@ Button {
     property string size: 'medium'
     property bool mini: false
     property string variant: 'text' // contained、outlined、text(flat)、fab, default: text
-    property string text_color
+    property string textColor
 
     enabled: !disabled
     topPadding: 3 * Palatte.unit
@@ -40,7 +40,7 @@ Button {
             name: "contained"
             PropertyChanges {
                 target: button
-                Material.foreground: text_color ? text_color : (button.color === 'primary' || button.color === 'secondary' ? Colors.commonWhite : Colors.commonBlack)
+                Material.foreground: textColor ? textColor : (button.color === 'primary' || button.color === 'secondary' ? Colors.commonWhite : Colors.commonBlack)
                 Material.background: button.color ? Palatte.string2Color(button.color) : Grey._300
             }
         },

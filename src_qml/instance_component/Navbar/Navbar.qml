@@ -4,7 +4,6 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.11
 import "../../common_qml"
 import "../../common_component/MaterialUI"
-import "../../common_component/Icon"
 import "../../common_component/Route"
 import "../../instance_component/AboutDialog"
 

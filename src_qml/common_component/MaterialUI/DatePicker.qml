@@ -1,10 +1,7 @@
 import QtQuick 2.13
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.11
-import "../DateSelector"
-import "../../Icon"
-import "../../../common_qml"
-import "../../Text/Typography/FontSize.js" as FontSize
+import "./styles"
 
 Rectangle {
     id: datePicker
@@ -18,12 +15,33 @@ Rectangle {
     height: children[1].height
     radius: 5
     border.width: textInput.activeFocus ? 2 : 1
-    border.color: textInput.activeFocus ? Color.primary : Color.text_secondary
+    border.color: textInput.activeFocus ? Palatte.primaryMain : Palatte.lightTextSecondary
+
+    function prefixZero(num, length) {
+        return ('' + num).length < length ? ((new Array(length + 1)).join('0') + num).slice(-length) : '' + num;
+    }
+
+    function getTimeByDate(date, format="%y.%M.%d %h:%mm.%s") {
+        // console.log(date)
+        format = format.replace("%MM", prefixZero(date.getMonth()+1, 2))
+        format = format.replace("%dd", prefixZero(date.getDate(), 2))
+        format = format.replace("%hh", prefixZero(date.getHours(), 2))
+        format = format.replace("%mm", prefixZero(date.getMinutes(), 2))
+        format = format.replace("%ss", prefixZero(date.getSeconds(), 2))
+
+        format = format.replace("%y", date.getFullYear())
+        format = format.replace("%M", date.getMonth()+1)
+        format = format.replace("%d", date.getDate())
+        format = format.replace("%h", date.getHours())
+        format = format.replace("%m", date.getMinutes())
+        format = format.replace("%s", date.getSeconds())
+        return format
+    }
 
     function setValue(date) {
         value = date
         dateSelector.selectedDate = date
-        datePicker._last_text = Tools.getTimeByDate(date, "%y/%MM/%dd")
+        datePicker._last_text = getTimeByDate(date, "%y/%MM/%dd")
         textInput.text = datePicker._last_text
     }
 
@@ -50,7 +68,7 @@ Rectangle {
             Icon {
                 name: 'calendar'
                 size: 16
-                color: Color.text_secondary
+                color: Palatte.lightTextSecondary
             }
 
             onClicked: {
@@ -61,9 +79,9 @@ Rectangle {
 
         TextInput {
             id: textInput
-            font.pointSize: FontSize.body2
+            font.pointSize: TypographyStyle.fontSizeList.body2
             text: "0000/00/00"
-//            text: Tools.getTimeByDate(new Date(), "%y/%MM/%dd")
+//            text: getTimeByDate(new Date(), "%y/%MM/%dd")
             anchors.verticalCenter: parent.verticalCenter
             leftPadding: 20
 
@@ -139,7 +157,7 @@ Rectangle {
             }
 
             Component.onCompleted: {
-                datePicker._last_text = Tools.getTimeByDate(datePicker.value, "%y/%MM/%dd")
+                datePicker._last_text = getTimeByDate(datePicker.value, "%y/%MM/%dd")
 //                console.log(datePicker.value)
                 textInput.text = datePicker._last_text
             }
@@ -170,7 +188,7 @@ Rectangle {
             onClicked: {
 //                console.log(date)
                 datePicker.value = date
-                textInput.text = Tools.getTimeByDate(date, "%y/%MM/%dd")
+                textInput.text = getTimeByDate(date, "%y/%MM/%dd")
 //                console.log('date click change')
                 change(date)
             }

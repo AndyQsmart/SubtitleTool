@@ -2,11 +2,8 @@ import QtQuick 2.13
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
 import QtQuick.Layouts 1.11
-import "../../../common_qml"
-import "../../Text/Typography/FontSize.js" as FontSize
-import "../DatePicker"
-import "../../Text/OutlinedTextField"
-import "../../Text/Typography"
+import "./"
+import "./styles"
 
 Item {
     id: time_picker
@@ -47,7 +44,7 @@ Item {
             property bool is_init: false
             id: box_list
             Layout.leftMargin: 10
-            font.pointSize: FontSize.body2
+            font.pointSize: TypographyStyle.fontSizeList.body2
             popup.height: 400
             model: {
                 let hour_list = []
@@ -92,7 +89,7 @@ Item {
                 enabled: false
                 radius: 5
                 border.width: 1
-                border.color: Color.text_secondary
+                border.color: Palatte.lightTextSecondary
             }
         }
 
@@ -101,10 +98,11 @@ Item {
             Layout.leftMargin: 10
             width: 110
 
-            OutlinedTextField {
+            TextField {
                 property bool is_init: false
                 id: min_text
                 anchors.fill: parent
+                variant: 'outlined'
                 onTextChanged: {
                     if (!is_init) {
                         return
